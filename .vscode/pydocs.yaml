@@ -1,0 +1,80 @@
+name: Python-docs
+version: 1.0.0
+schema: v1
+docs:
+  - name: Continue
+    startUrl: https://docs.continue.dev/intro
+  - name: Python Official Documentation
+    startUrl: https://docs.python.org/
+  - name: PyPI (Python Package Index)
+    startUrl: https://pypi.org/
+  - name: NumPy Documentation
+    startUrl: https://numpy.org/doc/
+  - name: Pandas Documentation
+    startUrl: https://pandas.pydata.org/docs/
+  - name: Matplotlib Documentation
+    startUrl: https://matplotlib.org/stable/contents.html
+  - name: Requests Documentation
+    startUrl: https://docs.python-requests.org/en/latest/
+  - name: Flask Documentation
+    startUrl: https://flask.palletsprojects.com/en/latest/
+  - name: Django Documentation
+    startUrl: https://docs.djangoproject.com/en/stable/
+  - name: Asyncio Documentation
+    startUrl: https://docs.python.org/3/library/asyncio.html
+  - name: SQLAlchemy Documentation
+    startUrl: https://docs.sqlalchemy.org/en/14/
+  - name: PyTorch Documentation
+    startUrl: https://pytorch.org/docs/stable/index.html
+  - name: TensorFlow Documentation
+    startUrl: https://www.tensorflow.org/api_docs
+  - name: Beautiful Soup Documentation
+    startUrl: https://www.crummy.com/software/BeautifulSoup/bs4/doc/
+  - name: pytest Documentation
+    startUrl: https://docs.pytest.org/en/stable/
+  - name: aiosqlite Documentation
+    startUrl: https://aiosqlite.omnilib.dev/en/latest/
+  - name: annotated-types Documentation
+    startUrl: https://annotated-types.readthedocs.io/en/latest/
+  - name: anyio Documentation
+    startUrl: https://anyio.readthedocs.io/en/stable/
+  - name: asyncpg Documentation
+    startUrl: https://magicstack.github.io/asyncpg/current/
+  - name: fastapi Documentation
+    startUrl: https://fastapi.tiangolo.com/
+  - name: flask-cors Documentation
+    startUrl: https://flask-cors.readthedocs.io/en/latest/
+  - name: Flask-Login Documentation
+    startUrl: https://flask-login.readthedocs.io/en/latest/
+  - name: jose Documentation
+    startUrl: https://python-jose.readthedocs.io/en/latest/
+  - name: jwt Documentation
+    startUrl: https://pyjwt.readthedocs.io/en/stable/
+  - name: locust Documentation
+    startUrl: https://docs.locust.io/en/stable/
+  - name: psycopg2-binary Documentation
+    startUrl: https://www.psycopg.org/docs/
+  - name: pyasn1 Documentation
+    startUrl: https://pyasn1.readthedocs.io/en/latest/
+  - name: pycparser Documentation
+    startUrl: https://pycparser.readthedocs.io/en/latest/
+  - name: pydantic Documentation
+    startUrl: https://docs.pydantic.dev/latest/
+  - name: pytest-asyncio Documentation
+    startUrl: https://pytest-asyncio.readthedocs.io/en/latest/
+  - name: python-dotenv Documentation
+    startUrl: https://saurabh-kumar.com/python-dotenv/
+  - name: python-jose Documentation
+    startUrl: https://python-jose.readthedocs.io/en/latest/
+  - name: python-multipart Documentation
+    startUrl: https://github.com/andrew-d/python-multipart
+  - name: SQLAlchemy-Utils Documentation
+    startUrl: https://sqlalchemy-utils.readthedocs.io/en/latest/
+  - name: starlette Documentation
+    startUrl: https://www.starlette.io/
+  - name: typing-inspection Documentation
+    startUrl: https://github.com/agronholm/typing_inspect
+  - name: urllib3 Documentation
+    startUrl: https://urllib3.readthedocs.io/en/latest/
+  - name: uvicorn Documentation
+    startUrl: https://www.uvicorn.org/

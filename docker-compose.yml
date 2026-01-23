@@ -1,0 +1,81 @@
+version: "3.8"
+
+services:
+  postgres:
+    image: postgres:16
+    container_name: postgres_fld
+    environment:
+      POSTGRES_USER: dev
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: files_db
+    ports:
+      - "5435:5432"
+    volumes:
+      - pgdata_fld:/var/lib/postgresql/data
+      #- ./deploy/init.sql:/docker-entrypoint-initdb.d/init-database.sql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U dev -d postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    networks:
+      - net_shared
+  pgadmin:
+    container_name: pgadmin_fld
+    image: dpage/pgadmin4:7.2
+    command: -c 'max_connections=1000' -c 'shared_buffers=2GB' -c 'work_mem=524MB' -c 'maintenance_work_mem=256MB' -c 'effective_cache_size=2GB' -c 'max_worker_processes=10' 
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "dev@habr.com"
+      PGADMIN_DEFAULT_PASSWORD: "admin"
+      PGADMIN_CONFIG_SERVER_MODE: "False"
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
+    ports:
+      - "5050:80"
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: 1G
+    networks:
+      - net_shared
+
+  fastapi:
+    build:
+      dockerfile: Dockerfile
+      context: .
+    container_name: fastapi_fld
+    ports:
+      - "8080:8080"   # FastAPI default port
+    environment:
+      MODE: DEV
+      DB: postgresql+asyncpg
+      DB_USER: dev
+      DB_PASS: admin
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_NAME: files_db
+      #DATABASE_URL: postgresql://myuser:mypassword@postgres_db/mydatabase
+      #JWT 
+      JWT_ALGORITHM: HS256
+      JWT_SECRET_KEY: 12345678901234567890123456789012
+      JWT_ACCESS_TOKEN_EXPIRE_MINUTES: 60
+      JWT_REFRESH_TOKEN_EXPIRE_MINUTES: 60
+      #YANDEX
+      YANDEX_CLIENT_ID: c24b56cb912b47378db420335797ed5c
+      YANDEX_CLIENT_SECRET: 3c36968eb74c4aeca32016be5cc44c26
+      #YANDEX_REDIRECT_URI: https://oauth.yandex.ru/testWebAudioFileLoader
+      YANDEX_REDIRECT_URI: https://oauth.yandex.ru/verification_code
+      
+    depends_on:
+      - postgres
+    networks:
+      - net_shared
+volumes:
+  pgdata_fld:
+  pgadmin-data:
+
+networks:
+  net_shared:
