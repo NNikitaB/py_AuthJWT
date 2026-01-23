@@ -1,0 +1,19 @@
+version: "3.7"
+   
+services:
+  back_prep:
+    container_name: 'back_api'
+    build:
+      dockerfile: Dockerfile
+      context: .
+    ports:
+      - "8080:8080"   # FastAPI default port
+    environment:
+      MODE: DEV
+      DB: postgresql+asyncpg
+      DB_USER: dev
+      DB_PASS: admin
+      DB_HOST: 0.0.0.0
+      DB_PORT: 5432
+      DB_NAME: files_db
+      #DATABASE_URL: postgresql://myuser:mypassword@postgres_db/mydatabase

@@ -139,11 +139,17 @@ def test_add_user_service(db_session):
         is_superuser=False,
         role=UserRole.USER,
         created_at=datetime.now(UTC),
-        notes="Test user",
-        
+        notes="Test user",       
         )
     serv = ServicesAccess(user_uuid=user.uuid)
     user.services_access = serv
+
+
+    # serv1 = ServicesAccess(service_name=ServiceName.PreprocessingTable, access_level=AccessLevel.User, user_uuid=user.uuid)
+    # serv2 = ServicesAccess(service_name=ServiceName.TimeSeries, access_level=AccessLevel.Pro, user_uuid=user.uuid)
+    # user.services_access.append(serv1)
+    # user.services_access.append(serv2)
+
     s = db_session
     s.add(user)
     s.commit()
@@ -167,6 +173,12 @@ def test_get_user_services(db_session):
         )
     serv = ServicesAccess(user_uuid=user.uuid)
     user.access_user = serv
+
+    # serv1 = ServicesAccess(service_name=ServiceName.PreprocessingTable, access_level=AccessLevel.User, user_uuid=user.uuid)
+    # serv2 = ServicesAccess(service_name=ServiceName.TimeSeries, access_level=AccessLevel.Pro, user_uuid=user.uuid)
+    # user.services_access.append(serv1)
+    # user.services_access.append(serv2)
+
     s = db_session
     s.add(user)
     s.commit()
@@ -191,6 +203,12 @@ def test_delete_user_services(db_session):
         )
     serv = ServicesAccess(user_uuid=user.uuid)
     user.access_user = serv
+
+    # serv1 = ServicesAccess(service_name=ServiceName.PreprocessingTable, access_level=AccessLevel.User, user_uuid=user.uuid)
+    # serv2 = ServicesAccess(service_name=ServiceName.TimeSeries, access_level=AccessLevel.Pro, user_uuid=user.uuid)
+    # user.services_access.append(serv1)
+    # user.services_access.append(serv2)
+
     s = db_session
     s.add(user)
     s.commit()

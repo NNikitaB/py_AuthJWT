@@ -43,3 +43,6 @@ class Users(Base):
     created_at: Mapped[datetime] = mapped_column(nullable=False,default=datetime.now(UTC))
     notes: Mapped[str] = mapped_column(nullable=True)
     access_user = relationship("ServicesAccess", uselist=False,cascade="all, delete-orphan",backref="users")
+    #additional fields
+    #services_access = relationship("ServicesAccess",back_populates="user",cascade="all, delete",passive_deletes=True, lazy="selectin")
+

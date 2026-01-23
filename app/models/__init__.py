@@ -3,8 +3,12 @@ __all__ = [
     'Users',
     'UserRole',
     'ServicesAccess',
+    'ServiceName',
+    'AccessLevel',
 ]
 
-from .ServicesAccess import ServicesAccess
+
 from .Users import Users,UserRole
+from .ServicesAccess import ServicesAccess, ServiceName, AccessLevel
+
 from .Base import Base

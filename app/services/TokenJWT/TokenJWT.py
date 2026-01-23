@@ -11,6 +11,11 @@ from jose import JWTError, jwt
 from app.core.config import settings
 from app.core import UserRole
 from app.utils.patterns import UnitOfWork
+
+from app.schema import UserBase,UserGet,ServiceAccessBase
+from jose import JWTError, jwt
+from app.config import settings
+
 from uuid import UUID
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
@@ -48,7 +53,8 @@ class TokenJWT:
         except JWTError:
             return None
         
-    def create_user_access_service_tokens(self, user_base: UserGet)-> tuple[str, str]:
+
+    def create_user_access_services_tokens(self, user_base: UserGet)-> tuple[str, str]:
         """
             Create access and refresh tokens for a user with service access details.
         
@@ -59,7 +65,7 @@ class TokenJWT:
                 tuple[str, str]: A tuple containing the access token and refresh token.
         
             The method generates two JWT tokens:
-            1. An access token with  user access levels and user UUID
+            1. An access token with service access levels and user UUID
             2. A refresh token with user profile information
             """
         
@@ -73,6 +79,11 @@ class TokenJWT:
         to_encode.update({"is_active": user_base.is_active})
         to_encode.update({"is_superuser": user_base.is_superuser})
         to_encode.update({"role": user_base.role})
+        services = [it.model_dump() for it in user_base.services_access]
+        to_encode.update({"services": services})
+        sub = {"uuid": str(user_base.uuid)}
+        to_encode.update({"sub": sub})
+
         expire1 = datetime.now(UTC) + timedelta(minutes=self.access_token_expire_minutes)
         to_encode.update({"exp": expire1})
         access_token = jwt.encode(to_encode, self.secret_key, algorithm=self.algorithm)
@@ -97,7 +108,8 @@ class TokenJWT:
         except JWTError:
             return None
         
-    def verify_user_access_token_get_access(self, token: str)->ServiceAccessBase|None:
+
+    def verify_user_access_token_get_services(self, token: str)->list[ServiceAccessBase]|None:
         """Проверка access токена"""
         try:
             payload = jwt.decode(token, self.secret_key, algorithms=[self.algorithm])
@@ -146,6 +158,12 @@ class TokenJWT:
             dict_to.update({"role": UserRole(payload.get("role"))})
 
             return dict_to
+            # TODO
+            # servs: list|None = payload.get("services")
+            # if servs is None:
+            #     return None
+            # services: list[ServiceAccessBase] = [ServiceAccessBase(**it) for it in servs]
+            # return services
         except JWTError:
             return None
     
@@ -232,4 +250,5 @@ async def get_user(token: str, uof: UnitOfWork) -> UserUpdate:
     if not user.is_active:
         raise credentials_exception_403
     return UserUpdate.model_validate(user)
+
 

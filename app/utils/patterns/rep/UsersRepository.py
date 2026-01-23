@@ -57,9 +57,16 @@ class UsersRepository(BaseSqlAsyncRepository[Users]):
     async def get_by_psevdonim(self, psevdonim):
         """Get user by psevdonim"""
         return await self.list(filters={'psevdonim': psevdonim})
+
     async def get_access_user(self, uuid):
         """Get access for user"""
         user = await self.get_by_identifier(uuid)
         if user:
             return user.access_user
+
+    async def get_list_services(self, uuid):
+        """Get list of services for user"""
+        user = await self.get_by_identifier(uuid)
+        if user:
+            return user.services_access
         return None

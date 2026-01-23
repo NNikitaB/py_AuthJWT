@@ -12,14 +12,22 @@ class ServiceAccessBase(BaseModel):
     psevdonim: bool = True
     username: bool = True
 
+    service_name: ServiceName = ServiceName.Default
+    is_active: bool = False
+    access_level: AccessLevel = AccessLevel.User
+
+
 
 class ServiceAccessGet(ServiceAccessBase):
     id: int
+    granted_at: Optional[datetime]
     user_uuid: UUID
 
 
 class ServiceAccessCreate(ServiceAccessBase):
     user_uuid: UUID
+    granted_at: Optional[datetime] = datetime.now(UTC)
+
 
 
 class ServiceAccessUpdate(ServiceAccessBase):

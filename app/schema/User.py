@@ -18,6 +18,7 @@ class UserBase(BaseModel):
 
 class UserGet(UserBase):
     email_verified: bool = False
+
     access_user: Optional[ServiceAccessBase] = None 
 
 class UserCreate(UserBase):
@@ -40,8 +41,23 @@ class UserUpdate(BaseModel):
     created_at: Optional[datetime] = None
     email_verified: Optional[bool] = None
     access_user: Optional[ServiceAccessGet] = None
+    services_access: List[ServiceAccessBase] 
+
+class UserCreate(UserBase):
+    email_verified: bool = False
+    services_access: List[ServiceAccessGet] = []
+    hashed_password: str
+    created_at: datetime = datetime.now(UTC)
+
+class UserUpdate(UserBase):
+    hashed_password: str
+    email_verified: Optional[bool] = None
+    services_access: Optional[List[ServiceAccessGet]] = None
+
 
 class UserResponse(UserBase):
     created_at: datetime
     email_verified: bool
     access_user: ServiceAccessGet = None 
+    services_access: List[ServiceAccessGet] = [] 
+
