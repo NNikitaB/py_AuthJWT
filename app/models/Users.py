@@ -24,13 +24,15 @@ class Users(Base):
         is_superuser: Administrative privilege flag
         created_at: Timestamp of user account creation
         notes: Optional additional user notes
+        access_user: Relationship to user's access
         services_access: Relationship to user's service access entries
+        specific_access: Relationship to user's additional access
         role (UserRole): Relationship to user's assigned roles
     """
 
     __tablename__ = 'users'
     #basic fields
-    uuid: Mapped[UUID] = mapped_column(primary_key=True, default=uuid4)  
+    uuid: Mapped[UUID] = mapped_column(primary_key=True, default=uuid4,index=True)  
     username: Mapped[str] = mapped_column(nullable=False)
     psevdonim: Mapped[str] = mapped_column(unique=True, nullable=False)
     email: Mapped[str] = mapped_column(unique=True, nullable=False)
@@ -42,7 +44,8 @@ class Users(Base):
     role: Mapped[str] = mapped_column(nullable=False,default=UserRole.USER)
     created_at: Mapped[datetime] = mapped_column(nullable=False,default=datetime.now(UTC))
     notes: Mapped[str] = mapped_column(nullable=True)
-    access_user = relationship("ServicesAccess", uselist=False,cascade="all, delete-orphan",backref="users")
+    access_user = relationship("BaseUserRoleAccess", uselist=False,cascade="all, delete-orphan",back_populates="users")
     #additional fields
-    #services_access = relationship("ServicesAccess",back_populates="user",cascade="all, delete",passive_deletes=True, lazy="selectin")
+    services_access = relationship("ServicesAccess",back_populates="user",cascade="all, delete",passive_deletes=True, lazy="selectin")
+    specific_access = relationship("SpecificAccess",back_populates="user",cascade="all, delete",passive_deletes=True, lazy="selectin")
 
