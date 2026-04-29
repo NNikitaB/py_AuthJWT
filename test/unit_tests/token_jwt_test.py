@@ -30,7 +30,7 @@ def token_service():
     return service
 
 def test_create_user_access_service_tokens(token_service, user_get):
-    access_token, refresh_token = token_service.create_user_access_service_tokens(user_get)
+    access_token, refresh_token = token_service.create_user_access_services_tokens(user_get)
     
     # Проверяем, что токены созданы
     assert access_token is not None

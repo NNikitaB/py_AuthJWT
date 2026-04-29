@@ -6,12 +6,6 @@ from datetime import datetime, UTC
 
 
 class ServiceAccessBase(BaseModel):
-    notes: bool = True
-    phone: bool = True
-    email: bool = True
-    psevdonim: bool = True
-    username: bool = True
-
     service_name: ServiceName = ServiceName.Default
     is_active: bool = False
     access_level: AccessLevel = AccessLevel.User
@@ -20,7 +14,7 @@ class ServiceAccessBase(BaseModel):
 
 class ServiceAccessGet(ServiceAccessBase):
     id: int
-    granted_at: Optional[datetime]
+    granted_at: Optional[datetime] = None
     user_uuid: UUID
 
 

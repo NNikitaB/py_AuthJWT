@@ -29,4 +29,6 @@ class BaseUserRoleAccess(Base):
     email: Mapped[bool]  = mapped_column(default=False)
     psevdonim: Mapped[bool]  = mapped_column(default=False)
     username: Mapped[bool]  = mapped_column(default=False)
-    user_uuid: Mapped[UUID] = mapped_column(ForeignKey("users.uuid",ondelete="CASCADE"), nullable=False)
+    user_uuid: Mapped[UUID] = mapped_column(ForeignKey("users.uuid",ondelete="CASCADE"), nullable=False, unique=True)
+    
+    user = relationship("Users",back_populates="access_user")

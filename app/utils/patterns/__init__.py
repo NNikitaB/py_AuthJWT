@@ -1,11 +1,11 @@
 __all__ = [
-    "ServicesAccessRepository",
+    "ServiceAccessRepository",
     "UsersRepository",
     "IUnitOfWork",
     "UnitOfWork",
 ]
 
 
-from .rep import UsersRepository, ServicesAccessRepository
+from .rep import UsersRepository, ServiceAccessRepository
 from .uow import UnitOfWork, IUnitOfWork
 

@@ -10,7 +10,7 @@ from app.schema import (
     ServiceAccessCreate,
     ServiceAccessResponse,
 )
-from app.models import Users, ServicesAccess
+from app.models import Users, ServiceAccess
 from app.utils.patterns import IUnitOfWork, UnitOfWork
 from uuid import UUID
 from app.services.TokenJWT import get_user
@@ -269,7 +269,7 @@ class UserService:
             if access:
                 for field, value in access_data.model_dump(exclude_unset=True).items():
                     setattr(current_user, field, value)
-            orm_access = ServicesAccess(**access.model_dump(exclude_unset=True))
+            orm_access = ServiceAccess(**access.model_dump(exclude_unset=True))
             await self.uow.services_access.update(orm_access)
             await self.uow.commit()
             user = await self.uow.users.get_by_identifier(current_user.uuid)
@@ -434,7 +434,7 @@ class UserService:
     #         sers =  user.services_access
     #         if servise_data.service_name in sers:
     #             raise ValueError("Service already exists")
-    #         servise = ServicesAccess(
+    #         servise = ServiceAccess(
     #             service_name=servise_data.service_name,
     #             user_uuid=servise_data.user_uuid,
     #             is_active=servise_data.is_active,

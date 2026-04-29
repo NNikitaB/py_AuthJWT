@@ -1,9 +1,9 @@
 __all__ = [
     'UsersRepository',
-    'ServicesAccessRepository',
+    'ServiceAccessRepository',
 ]
 
 
 from .UsersRepository import UsersRepository
-from .ServiceAccessRepository import ServicesAccessRepository
+from .ServiceAccessRepository import ServiceAccessRepository
 

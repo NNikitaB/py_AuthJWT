@@ -1,9 +1,21 @@
 from pydantic import BaseModel, EmailStr,Field
 from typing import Optional, List
-from app.schema import ServiceAccessGet, ServiceAccessBase
+from app.schema import (
+    ServiceAccessGet, 
+    ServiceAccessCreate,
+    ServiceAccessUpdate,
+    ServiceAccessUpdate,
+    SpecificAccessGet,
+    SpecificAccessCreate,
+    SpecificAccessUpdate,
+    BaseUserRoleAccessGet,
+    BaseUserRoleAccessCreate,
+    BaseUserRoleAccessUpdate,
+)
 from uuid import UUID
 from app.core import UserRole
 from datetime import datetime,UTC
+from bcrypt import gensalt, hashpw, checkpw 
 
 class UserBase(BaseModel):
     uuid: UUID
@@ -18,14 +30,18 @@ class UserBase(BaseModel):
 
 class UserGet(UserBase):
     email_verified: bool = False
+    hashed_password: str
+    access_user: Optional[BaseUserRoleAccessGet]
+    services_access: Optional[List[ServiceAccessUpdate]] 
+    specific_access: Optional[List[SpecificAccessUpdate]] 
 
-    access_user: Optional[ServiceAccessBase] = None 
 
 class UserCreate(UserBase):
     email_verified: bool = False
-    access_user: Optional[ServiceAccessGet] = None
+    access_user: Optional[BaseUserRoleAccessCreate]
     hashed_password: str
     created_at: Optional[datetime] = Field(default_factory=lambda: datetime.now(UTC))
+    
 
 class UserUpdate(BaseModel):
     uuid: UUID
@@ -40,24 +56,10 @@ class UserUpdate(BaseModel):
     hashed_password: Optional[str] = None
     created_at: Optional[datetime] = None
     email_verified: Optional[bool] = None
-    access_user: Optional[ServiceAccessGet] = None
-    services_access: List[ServiceAccessBase] 
+    access_user: Optional[BaseUserRoleAccessUpdate]
+    services_access: Optional[List[ServiceAccessUpdate]] 
+    specific_access: Optional[List[SpecificAccessUpdate]] 
 
-class UserCreate(UserBase):
-    email_verified: bool = False
-    services_access: List[ServiceAccessGet] = []
-    hashed_password: str
-    created_at: datetime = datetime.now(UTC)
-
-class UserUpdate(UserBase):
-    hashed_password: str
-    email_verified: Optional[bool] = None
-    services_access: Optional[List[ServiceAccessGet]] = None
-
-
-class UserResponse(UserBase):
-    created_at: datetime
-    email_verified: bool
-    access_user: ServiceAccessGet = None 
-    services_access: List[ServiceAccessGet] = [] 
+class UserResponse(UserGet):
+    pass
 

@@ -2,7 +2,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from typing import Callable
 from abc import ABC, abstractmethod
 from typing import Protocol
-from app.utils.patterns.rep import UsersRepository,ServicesAccessRepository
+from app.utils.patterns.rep import UsersRepository,ServiceAccessRepository
 
 
 class IUnitOfWork(ABC):
@@ -38,7 +38,7 @@ class UnitOfWork(IUnitOfWork):
     def __init__(self, session: AsyncSession):
         super().__init__(session)
         self.users = UsersRepository(session)  # Подключаем репозиторий пользователей
-        self.services_access = ServicesAccessRepository(session)  # Подключаем репозиторий доступа
+        self.services_access = ServiceAccessRepository(session)  # Подключаем репозиторий доступа
 
     async def __aenter__(self):
         """Начинаем транзакцию"""

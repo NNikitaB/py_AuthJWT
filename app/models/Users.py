@@ -44,8 +44,8 @@ class Users(Base):
     role: Mapped[str] = mapped_column(nullable=False,default=UserRole.USER)
     created_at: Mapped[datetime] = mapped_column(nullable=False,default=datetime.now(UTC))
     notes: Mapped[str] = mapped_column(nullable=True)
-    access_user = relationship("BaseUserRoleAccess", uselist=False,cascade="all, delete-orphan",back_populates="users")
+    access_user = relationship("BaseUserRoleAccess", uselist=False,cascade="all, delete-orphan",back_populates="user")
     #additional fields
-    services_access = relationship("ServicesAccess",back_populates="user",cascade="all, delete",passive_deletes=True, lazy="selectin")
+    services_access = relationship("ServiceAccess",back_populates="user",cascade="all, delete",passive_deletes=True, lazy="selectin")
     specific_access = relationship("SpecificAccess",back_populates="user",cascade="all, delete",passive_deletes=True, lazy="selectin")
 

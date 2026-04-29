@@ -5,8 +5,8 @@ from sqlalchemy.ext.asyncio import async_sessionmaker, create_async_engine,Async
 from sqlalchemy.orm import Session
 from app.models.Base import Base
 from app.core import UserRole,AccessLevel,ServiceName
-from app.models import Users, ServicesAccess
-from app.utils.patterns import UsersRepository, ServicesAccessRepository
+from app.models import Users, ServiceAccess
+from app.utils.patterns import UsersRepository, ServiceAccessRepository
 from app.schema import (
     UserBase,
     UserCreate,

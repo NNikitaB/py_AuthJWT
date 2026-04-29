@@ -2,7 +2,7 @@ import pytest
 from unittest.mock import AsyncMock
 from uuid import uuid4
 from app.schema import ServiceAccessGet,ServiceAccessCreate, UserUpdate
-from app.models import Users, ServicesAccess
+from app.models import Users, ServiceAccess
 from app.services.UserService import UserService
 
 
@@ -19,7 +19,7 @@ async def test_update_access_self_user():
     current_user = Users(uuid=user_uuid, username="selfuser",is_superuser=True)
 
     # Доступы (ORM)
-    access_orm = ServicesAccess(
+    access_orm = ServiceAccess(
         id=1,
         user_uuid=user_uuid,
         email=True,
@@ -40,7 +40,7 @@ async def test_update_access_self_user():
     result = await service.update_access(cur_user, user_update,access_update)
 
     # Проверка
-    assert isinstance(result, ServicesAccess)
+    assert isinstance(result, ServiceAccess)
     assert result.email is False
     assert result.phone is False
     uow.services_access.update.assert_awaited_once_with(access_orm)
@@ -63,7 +63,7 @@ async def test_update_access_self_user():
 #     other_user = Users(uuid=other_uuid, username="otheruser")
 
 #     # Доступы (ORM)
-#     access_orm = ServicesAccess(
+#     access_orm = ServiceAccess(
 #         id=2,
 #         user_uuid=other_uuid,
 #         email=True,
@@ -82,7 +82,7 @@ async def test_update_access_self_user():
 #     result = await service.update_access(admin_user, user_update, access_update)
 
 #     # Проверка
-#     assert isinstance(result, ServicesAccess)
+#     assert isinstance(result, ServiceAccess)
 #     assert result.email is False
 #     assert result.phone is True
 #     uow.services_access.update.assert_awaited_once_with(access_orm)

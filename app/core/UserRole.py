@@ -12,6 +12,7 @@ class UserRole(StrEnum):
         
     USER = "user"
     ADMIN = "admin"
-    #BOT = "bot"
-    #AGENT = "agent"
-
+    BOT = "bot"
+    AGENT = "agent"
+    BANNED = "banned"
+    DELETED = "deleted"
